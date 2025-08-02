@@ -1,0 +1,32 @@
+{
+  "name": "reactthreejsclaudecode",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomasis7/reactThreeJsClaudeCode.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/tomasis7/reactThreeJsClaudeCode/issues"
+  },
+  "homepage": "https://github.com/tomasis7/reactThreeJsClaudeCode#readme",
+  "dependencies": {
+    "@react-three/drei": "^10.6.1",
+    "@react-three/fiber": "^9.3.0",
+    "@vitejs/plugin-react": "^4.7.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "three": "^0.179.1",
+    "vite": "^7.0.6"
+  }
+}
