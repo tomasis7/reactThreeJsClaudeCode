@@ -1,16 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats } from "@react-three/drei";
 import Scene from "./components/Scene";
 import FPSControls from "./components/FPSControls";
 import ImageUpload from "./components/ImageUpload";
 import ArtworkSelector from "./components/ArtworkSelector";
+import { saveGalleryState, loadGalleryState, debouncedSave, getStorageInfo } from "./utils/galleryStorage";
 
 function App() {
   const [showUpload, setShowUpload] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
   const [selectedSegment, setSelectedSegment] = useState(null);
   const [artworks, setArtworks] = useState([]);
+  const [storageInfo, setStorageInfo] = useState(null);
+
+  // Load gallery state on app startup
+  useEffect(() => {
+    const savedArtworks = loadGalleryState();
+    if (savedArtworks.length > 0) {
+      setArtworks(savedArtworks);
+      console.log(`Restored ${savedArtworks.length} artworks from LocalStorage`);
+    }
+    updateStorageInfo();
+  }, []);
+
+  // Auto-save whenever artworks change
+  useEffect(() => {
+    if (artworks.length > 0) {
+      debouncedSave(artworks);
+      updateStorageInfo();
+    }
+  }, [artworks]);
+
+  const updateStorageInfo = () => {
+    setStorageInfo(getStorageInfo());
+  };
 
   const handleImageUpload = (artworkData) => {
     const newArtwork = {
@@ -34,6 +58,17 @@ function App() {
     ));
   };
 
+  const handleClearGallery = () => {
+    if (window.confirm('Are you sure you want to clear the entire gallery? This cannot be undone.')) {
+      setArtworks([]);
+      // Clear from localStorage
+      import('./utils/galleryStorage').then(({ clearGalleryState }) => {
+        clearGalleryState();
+        updateStorageInfo();
+      });
+    }
+  };
+
   return (
     <>
       <div className="ui-overlay">
@@ -43,14 +78,30 @@ function App() {
         <p>• ESC: Exit pointer lock</p>
         <p>• Drag yellow sphere: Adjust spotlight</p>
         <p>• Hold Shift + drag: Move light forward/back</p>
+        {storageInfo && (
+          <div className="storage-info">
+            <small>Gallery: {storageInfo.artworkCount} items ({storageInfo.sizeInKB}KB)</small>
+          </div>
+        )}
       </div>
 
-      <button 
-        className="upload-btn"
-        onClick={() => setShowUpload(true)}
-      >
-        Upload Artwork
-      </button>
+      <div className="controls-panel">
+        <button 
+          className="upload-btn"
+          onClick={() => setShowUpload(true)}
+        >
+          Upload Artwork
+        </button>
+        
+        {artworks.length > 0 && (
+          <button 
+            className="clear-btn"
+            onClick={handleClearGallery}
+          >
+            Clear Gallery
+          </button>
+        )}
+      </div>
 
       {showUpload && (
         <ImageUpload

@@ -37,12 +37,31 @@ body {
   opacity: 0.8;
 }
 
-/* Upload Button */
-.upload-btn {
+.storage-info {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.storage-info small {
+  color: #aaa;
+  font-size: 12px;
+}
+
+/* Controls Panel */
+.controls-panel {
   position: absolute;
   top: 20px;
   right: 20px;
   z-index: 100;
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+/* Control Buttons */
+.upload-btn,
+.clear-btn {
   background: #646cff;
   color: white;
   border: none;
@@ -56,6 +75,15 @@ body {
 
 .upload-btn:hover {
   background: #535bf2;
+  transform: translateY(-1px);
+}
+
+.clear-btn {
+  background: #dc3545;
+}
+
+.clear-btn:hover {
+  background: #c82333;
   transform: translateY(-1px);
 }
 
