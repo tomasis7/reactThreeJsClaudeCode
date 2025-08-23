@@ -36,3 +36,279 @@ body {
   margin-bottom: 5px;
   opacity: 0.8;
 }
+
+/* Upload Button */
+.upload-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  background: #646cff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.upload-btn:hover {
+  background: #535bf2;
+  transform: translateY(-1px);
+}
+
+/* Upload Modal */
+.upload-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+
+.upload-modal {
+  background: #1a1a1a;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+}
+
+.upload-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  border-bottom: 1px solid #333;
+}
+
+.upload-header h2 {
+  margin: 0;
+  color: #fff;
+  font-size: 1.4em;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: #ccc;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+}
+
+.close-btn:hover {
+  background: #333;
+  color: #fff;
+}
+
+.upload-content {
+  padding: 20px;
+}
+
+/* Upload Area */
+.upload-area {
+  border: 2px dashed #555;
+  border-radius: 8px;
+  padding: 40px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 20px;
+}
+
+.upload-area:hover,
+.upload-area.drag-active {
+  border-color: #646cff;
+  background: rgba(100, 108, 255, 0.05);
+}
+
+.upload-placeholder .upload-icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+}
+
+.upload-placeholder p {
+  margin: 10px 0;
+  color: #ccc;
+}
+
+.upload-hint {
+  font-size: 0.8em !important;
+  color: #888 !important;
+}
+
+.preview-container {
+  position: relative;
+}
+
+.preview-image {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+/* Form */
+.artwork-details {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #555;
+  border-radius: 4px;
+  background: #2a2a2a;
+  color: #fff;
+  font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #646cff;
+}
+
+.form-group textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+/* Buttons */
+.upload-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btn-secondary {
+  background: #555;
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background: #666;
+}
+
+.btn-primary {
+  background: #646cff;
+  color: #fff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: #535bf2;
+}
+
+.btn-primary:disabled {
+  background: #333;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* Artwork Selector */
+.selector-hint {
+  margin-bottom: 20px;
+  color: #ccc;
+  text-align: center;
+}
+
+.artwork-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 15px;
+  margin-bottom: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.artwork-option {
+  border: 2px solid #555;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: #2a2a2a;
+}
+
+.artwork-option:hover {
+  border-color: #888;
+  transform: translateY(-2px);
+}
+
+.artwork-option.selected {
+  border-color: #646cff;
+  box-shadow: 0 0 10px rgba(100, 108, 255, 0.3);
+}
+
+.artwork-option img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+}
+
+.artwork-info {
+  padding: 10px;
+}
+
+.artwork-info h4 {
+  margin: 0 0 5px 0;
+  color: #fff;
+  font-size: 14px;
+}
+
+.artwork-info p {
+  margin: 0;
+  color: #ccc;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+.no-artworks {
+  text-align: center;
+  padding: 40px 20px;
+  color: #ccc;
+}
+
+.no-artworks p {
+  margin: 10px 0;
+}

@@ -1,9 +1,39 @@
+import { useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Stats } from "@react-three/drei";
 import Scene from "./components/Scene";
 import FPSControls from "./components/FPSControls";
+import ImageUpload from "./components/ImageUpload";
+import ArtworkSelector from "./components/ArtworkSelector";
 
 function App() {
+  const [showUpload, setShowUpload] = useState(false);
+  const [showSelector, setShowSelector] = useState(false);
+  const [selectedSegment, setSelectedSegment] = useState(null);
+  const [artworks, setArtworks] = useState([]);
+
+  const handleImageUpload = (artworkData) => {
+    const newArtwork = {
+      id: Date.now(),
+      ...artworkData,
+      position: null // Will be set when placed on wall
+    };
+    setArtworks(prev => [...prev, newArtwork]);
+  };
+
+  const handleWallSegmentClick = (segmentId) => {
+    setSelectedSegment(segmentId);
+    setShowSelector(true);
+  };
+
+  const handleArtworkPlace = (artwork, segmentId) => {
+    setArtworks(prev => prev.map(art => 
+      art.id === artwork.id 
+        ? { ...art, position: segmentId }
+        : art
+    ));
+  };
+
   return (
     <>
       <div className="ui-overlay">
@@ -12,6 +42,29 @@ function App() {
         <p>• Mouse: Look around (click to enable)</p>
         <p>• ESC: Exit pointer lock</p>
       </div>
+
+      <button 
+        className="upload-btn"
+        onClick={() => setShowUpload(true)}
+      >
+        Upload Artwork
+      </button>
+
+      {showUpload && (
+        <ImageUpload
+          onImageUpload={handleImageUpload}
+          onClose={() => setShowUpload(false)}
+        />
+      )}
+
+      {showSelector && (
+        <ArtworkSelector
+          artworks={artworks}
+          selectedSegment={selectedSegment}
+          onSelect={handleArtworkPlace}
+          onClose={() => setShowSelector(false)}
+        />
+      )}
 
       <Canvas
         camera={{ position: [0, 1.7, 5], fov: 75 }}
@@ -56,7 +109,7 @@ function App() {
         <Stats />
 
         {/* Our 3D Scene */}
-        <Scene />
+        <Scene artworks={artworks} onWallSegmentClick={handleWallSegmentClick} />
       </Canvas>
     </>
   );
