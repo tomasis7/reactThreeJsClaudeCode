@@ -45,16 +45,25 @@ Create a FPS-style room navigation system that will become a digital gallery whe
 - Full file management system with title/description metadata
 
 ## Phase 4: Gallery Management
-- [ ] **Admin Interface**: UI for managing gallery layout and artworks
-- [ ] **Artwork Info**: Display titles, descriptions when viewing pieces
-- [ ] **Persistence**: Save/load gallery configurations
+- [ ] **LocalStorage Persistence**: Save/load artworks and placements automatically
+- [ ] **Gallery State Management**: Restore uploaded images and wall positions on page load
+- [ ] **Artwork Info Display**: Show titles, descriptions when hovering/clicking pieces
+- [ ] **Admin Interface**: UI for managing gallery layout and removing artworks
+- [ ] **Export/Import Gallery**: Save gallery configuration to file
+
+**Persistence Priority Items:**
+- [ ] Auto-save uploaded artworks to LocalStorage
+- [ ] Auto-save artwork placements and spotlight positions
+- [ ] Auto-restore gallery state on app startup
+- [ ] Add clear gallery / reset functionality
 
 ## Key Technologies Needed
 - `@react-three/drei` - FirstPersonControls or PointerLockControls
 - File upload handling with FileReader API
 - Three.js TextureLoader for dynamic image loading
 - Collision detection with bounding boxes
-- Local storage or backend for persistence
+- **LocalStorage API** - For client-side persistence of gallery data
+- **JSON serialization** - For storing artwork metadata and positions
 
 ## Development Notes
 - Start with Phase 1 to establish core navigation
