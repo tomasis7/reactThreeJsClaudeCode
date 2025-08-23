@@ -29,11 +29,20 @@ Create a FPS-style room navigation system that will become a digital gallery whe
 - Realistic PBR materials with proper roughness and metalness values
 - Professional gallery atmosphere with interactive elements
 
-## Phase 3: Image Upload & Placement
-- [ ] **File Upload**: React interface for users to select images
-- [ ] **Texture Processing**: Convert uploaded images to Three.js textures
-- [ ] **Wall Mounting**: Click-to-place system for positioning artwork
-- [ ] **Frame System**: Add picture frames around uploaded images
+## Phase 3: Image Upload & Placement ✅ COMPLETED
+- [x] **File Upload**: React interface for users to select images
+- [x] **Texture Processing**: Convert uploaded images to Three.js textures
+- [x] **Wall Mounting**: Click-to-place system for positioning artwork
+- [x] **Frame System**: Add picture frames around uploaded images
+
+**Implementation Details:**
+- Created `ImageUpload.jsx` with drag & drop file selection and metadata input
+- Built `Artwork.jsx` with dynamic texture loading and aspect ratio preservation
+- Implemented `ArtworkSelector.jsx` modal for choosing artworks to place on walls
+- Added interactive spotlight positioning with 3D drag controls (normal + Shift modes)
+- Click empty wall segments to place artwork with visual feedback (+ icons)
+- Each artwork gets individual lighting that can be adjusted by dragging yellow debug sphere
+- Full file management system with title/description metadata
 
 ## Phase 4: Gallery Management
 - [ ] **Admin Interface**: UI for managing gallery layout and artworks

@@ -29,6 +29,9 @@ src/
 │   ├── FPSControls.jsx # First-person camera controls with WASD + mouse
 │   ├── WallSegment.jsx # Modular wall pieces with frames for artwork
 │   ├── GalleryFurniture.jsx # Pedestals, benches, information stands
+│   ├── ImageUpload.jsx # File upload modal with drag & drop
+│   ├── Artwork.jsx  # Dynamic artwork display with adjustable lighting
+│   ├── ArtworkSelector.jsx # Modal for selecting artwork to place
 │   └── InteractiveCube.jsx # Legacy example (not currently used)
 ├── main.jsx         # React app entry point
 └── index.css        # Global styles
@@ -36,11 +39,15 @@ src/
 
 ### Core Three.js Concepts Demonstrated
 
-**Digital Gallery Features (Phase 1 & 2 Complete):**
+**Digital Gallery Features (Phase 1, 2 & 3 Complete):**
 - `FPSControls` - First-person navigation with WASD + mouse look
 - `Room` component - Gallery space with walls, floor, ceiling
 - `WallSegment` - Modular wall pieces with frames and individual lighting
 - `GalleryFurniture` - Pedestals, benches, and information stands
+- `ImageUpload` - Drag & drop file upload with metadata input
+- `Artwork` - Dynamic texture loading and aspect ratio preservation
+- `ArtworkSelector` - Modal interface for placing artworks on walls
+- Interactive spotlight positioning with 3D drag controls
 - Professional lighting system with shadows
 - Pointer lock for immersive mouse control
 - Collision detection to keep player within room bounds
@@ -93,16 +100,37 @@ function FPSControls() {
 }
 ```
 
-**Room Creation Pattern:**
+**Dynamic Artwork Loading:**
 ```jsx
-function Room() {
+function Artwork({ artworkData }) {
+  const texture = useLoader(TextureLoader, artworkData.preview)
+  const [lightPosition, setLightPosition] = useState([0, 1.2, 0.3])
+  
   return (
     <group>
-      <mesh position={[0, 0, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[20, 20]} />
-        <meshStandardMaterial color="#8B4513" />
+      <mesh>
+        <planeGeometry args={adjustedSize} />
+        <meshStandardMaterial map={texture} />
       </mesh>
+      <spotLight position={lightPosition} target={targetRef.current} />
     </group>
+  )
+}
+```
+
+**Interactive Upload System:**
+```jsx
+function ImageUpload({ onImageUpload }) {
+  const handleFileSelect = (file) => {
+    const reader = new FileReader()
+    reader.onload = (e) => setPreview(e.target.result)
+    reader.readAsDataURL(file)
+  }
+  
+  return (
+    <div onDrop={handleDrop} onClick={() => fileInputRef.current.click()}>
+      {/* Upload interface */}
+    </div>
   )
 }
 ```

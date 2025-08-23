@@ -41,6 +41,8 @@ function App() {
         <p>• WASD: Move around</p>
         <p>• Mouse: Look around (click to enable)</p>
         <p>• ESC: Exit pointer lock</p>
+        <p>• Drag yellow sphere: Adjust spotlight</p>
+        <p>• Hold Shift + drag: Move light forward/back</p>
       </div>
 
       <button 
