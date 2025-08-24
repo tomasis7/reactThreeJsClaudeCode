@@ -5,12 +5,17 @@ import Scene from "./components/Scene";
 import FPSControls from "./components/FPSControls";
 import ImageUpload from "./components/ImageUpload";
 import ArtworkSelector from "./components/ArtworkSelector";
+import ArtworkInfo from "./components/ArtworkInfo";
+import AdminPanel from "./components/AdminPanel";
 import { saveGalleryState, loadGalleryState, debouncedSave, getStorageInfo } from "./utils/galleryStorage";
 
 function App() {
   const [showUpload, setShowUpload] = useState(false);
   const [showSelector, setShowSelector] = useState(false);
+  const [showArtworkInfo, setShowArtworkInfo] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
   const [selectedSegment, setSelectedSegment] = useState(null);
+  const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [artworks, setArtworks] = useState([]);
   const [storageInfo, setStorageInfo] = useState(null);
 
@@ -69,6 +74,21 @@ function App() {
     }
   };
 
+  const handleArtworkInfoClick = (artwork) => {
+    setSelectedArtwork(artwork);
+    setShowArtworkInfo(true);
+  };
+
+  const handleRemoveArtwork = (artworkId) => {
+    setArtworks(prev => prev.filter(art => art.id !== artworkId));
+  };
+
+  const handleMoveArtwork = (artworkId, newPosition) => {
+    setArtworks(prev => prev.map(art => 
+      art.id === artworkId ? { ...art, position: newPosition } : art
+    ));
+  };
+
   return (
     <>
       <div className="ui-overlay">
@@ -101,6 +121,13 @@ function App() {
             Clear Gallery
           </button>
         )}
+        
+        <button 
+          className="admin-btn"
+          onClick={() => setShowAdmin(true)}
+        >
+          Admin Panel
+        </button>
       </div>
 
       {showUpload && (
@@ -116,6 +143,22 @@ function App() {
           selectedSegment={selectedSegment}
           onSelect={handleArtworkPlace}
           onClose={() => setShowSelector(false)}
+        />
+      )}
+
+      {showArtworkInfo && (
+        <ArtworkInfo
+          artwork={selectedArtwork}
+          onClose={() => setShowArtworkInfo(false)}
+        />
+      )}
+
+      {showAdmin && (
+        <AdminPanel
+          artworks={artworks}
+          onRemoveArtwork={handleRemoveArtwork}
+          onMoveArtwork={handleMoveArtwork}
+          onClose={() => setShowAdmin(false)}
         />
       )}
 
@@ -162,7 +205,11 @@ function App() {
         <Stats />
 
         {/* Our 3D Scene */}
-        <Scene artworks={artworks} onWallSegmentClick={handleWallSegmentClick} />
+        <Scene 
+          artworks={artworks} 
+          onWallSegmentClick={handleWallSegmentClick}
+          onArtworkInfoClick={handleArtworkInfoClick}
+        />
       </Canvas>
     </>
   );

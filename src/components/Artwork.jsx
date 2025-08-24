@@ -7,6 +7,7 @@ const Artwork = ({
   position,
   rotation = [0, 0, 0],
   size = [3.2, 2.4],
+  onInfoClick = null,
 }) => {
   const [hovered, setHovered] = useState(false);
   const [lightPosition, setLightPosition] = useState([
@@ -105,6 +106,12 @@ const Artwork = ({
         position={[0, 0, 0.03]}
         onPointerOver={() => setHovered(true)}
         onPointerOut={() => setHovered(false)}
+        onClick={(e) => {
+          e.stopPropagation();
+          if (onInfoClick) {
+            onInfoClick(artworkData);
+          }
+        }}
       >
         <planeGeometry args={adjustedSize} />
         <meshStandardMaterial map={texture} transparent={false} />
@@ -139,16 +146,22 @@ const Artwork = ({
         <group position={[0, -adjustedSize[1] / 2 - 0.3, 0.02]}>
           {/* Plaque background */}
           <mesh>
-            <planeGeometry args={[Math.max(2, adjustedSize[0] * 0.8), 0.4]} />
+            <planeGeometry args={[Math.max(2.5, adjustedSize[0] * 0.9), 0.5]} />
             <meshStandardMaterial color="#F5F5F5" roughness={0.2} />
           </mesh>
 
           {/* Border */}
           <mesh position={[0, 0, 0.01]}>
             <planeGeometry
-              args={[Math.max(2, adjustedSize[0] * 0.8) - 0.02, 0.38]}
+              args={[Math.max(2.5, adjustedSize[0] * 0.9) - 0.02, 0.48]}
             />
             <meshStandardMaterial color="#FFFFFF" roughness={0.1} />
+          </mesh>
+          
+          {/* Click indicator */}
+          <mesh position={[0, 0, 0.02]}>
+            <planeGeometry args={[0.3, 0.1]} />
+            <meshBasicMaterial color="#646cff" transparent opacity={0.8} />
           </mesh>
         </group>
       )}

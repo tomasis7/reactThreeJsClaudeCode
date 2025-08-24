@@ -8,6 +8,7 @@ const WallSegment = ({
   height = 3, 
   artwork = null,
   onArtworkPlace = null,
+  onArtworkInfo = null,
   segmentId = null
 }) => {
   const [hovered, setHovered] = useState(false)
@@ -41,6 +42,7 @@ const WallSegment = ({
           artworkData={artwork} 
           position={[0, 0, 0]} 
           rotation={[0, 0, 0]}
+          onInfoClick={onArtworkInfo}
         />
       ) : (
         // Empty frame placeholder

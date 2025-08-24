@@ -2,7 +2,7 @@ import Room from './Room'
 import WallSegment from './WallSegment'
 import GalleryFurniture from './GalleryFurniture'
 
-export default function Scene({ artworks = [], onWallSegmentClick = null }) {
+export default function Scene({ artworks = [], onWallSegmentClick = null, onArtworkInfoClick = null }) {
   // Define all wall segments with IDs
   const wallSegments = [
     { id: 'north-1', position: [-6, 2, -9.9], rotation: [0, 0, 0] },
@@ -38,6 +38,7 @@ export default function Scene({ artworks = [], onWallSegmentClick = null }) {
             rotation={segment.rotation}
             artwork={artwork}
             onArtworkPlace={onWallSegmentClick}
+            onArtworkInfo={onArtworkInfoClick}
           />
         );
       })}
